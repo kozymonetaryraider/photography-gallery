@@ -1,0 +1,122 @@
+[
+  {
+    "id": "chen-yu-drifting-light",
+    "title": "漂移的光",
+    "artist": "陈宇",
+    "theme": "城市夜行",
+    "category": "street",
+    "date": "2024-11",
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    "description": "深夜街头，霓虹灯的光晕在胶片上留下了不可复制的肌理。"
+  },
+  {
+    "id": "li-wei-concrete-silence",
+    "title": "混凝土的沉默",
+    "artist": "李薇",
+    "theme": "建筑切片",
+    "category": "architecture",
+    "date": "2024-10",
+    "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80",
+    "description": "粗野主义建筑的线条在黑白胶片上呈现出更加锐利的质感。"
+  },
+  {
+    "id": "wang-fang-red-curtain",
+    "title": "红幕之后",
+    "artist": "王方",
+    "theme": "剧场后台",
+    "category": "portrait",
+    "date": "2024-09",
+    "image": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80",
+    "description": "后台的瞬间，光线穿过幕布的褶皱投下戏剧性的阴影。"
+  },
+  {
+    "id": "zhang-lei-salt-wind",
+    "title": "盐风",
+    "artist": "张磊",
+    "theme": "海岸线",
+    "category": "landscape",
+    "date": "2024-08",
+    "image": "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&q=80",
+    "description": "海风带着盐粒侵蚀着镜头，也侵蚀着时间。"
+  },
+  {
+    "id": "zhao-ting-metal-bloom",
+    "title": "金属开花",
+    "artist": "赵婷",
+    "theme": "工业遗迹",
+    "category": "documentary",
+    "date": "2024-07",
+    "image": "https://images.unsplash.com/photo-1440581571250-4ae83f6881c0?w=800&q=80",
+    "description": "废弃工厂中生锈的机械，在胶片上重新绽放。"
+  },
+  {
+    "id": "liu-bo-rain-ribbon",
+    "title": "雨带",
+    "artist": "刘波",
+    "theme": "雨季东京",
+    "category": "street",
+    "date": "2024-06",
+    "image": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80",
+    "description": "东京雨季，雨水在胶片上拉成丝线，城市在湿润中模糊。"
+  },
+  {
+    "id": "sun-mei-flesh-shadow",
+    "title": "肉身与影",
+    "artist": "孙美",
+    "theme": "人体研究",
+    "category": "portrait",
+    "date": "2024-05",
+    "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80",
+    "description": "光线在人体曲线上游走，黑白胶片捕捉了体温的痕迹。"
+  },
+  {
+    "id": "wu-qiang-desert-frequency",
+    "title": "沙漠频率",
+    "artist": "吴强",
+    "theme": "无人之地",
+    "category": "landscape",
+    "date": "2024-04",
+    "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
+    "description": "沙漠的纹路在底片上形成某种古老的信息素。"
+  },
+  {
+    "id": "huang-li-golden-hour",
+    "title": "黄金时刻",
+    "artist": "黄丽",
+    "theme": "暮色肖像",
+    "category": "portrait",
+    "date": "2024-03",
+    "image": "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80",
+    "description": "日落前十分钟的光线，柯达Portra最擅长的调色区间。"
+  },
+  {
+    "id": "yang-bo-vertical-city",
+    "title": "垂直城市",
+    "artist": "杨波",
+    "theme": "都市几何",
+    "category": "architecture",
+    "date": "2024-02",
+    "image": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+    "description": "摩天楼的玻璃幕墙反射着天空，形成二维与三维的错位。"
+  },
+  {
+    "id": "xu-wei-frozen-moment",
+    "title": "冰封瞬间",
+    "artist": "许伟",
+    "theme": "冬季物语",
+    "category": "landscape",
+    "date": "2024-01",
+    "image": "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=800&q=80",
+    "description": "零下二十度的清晨，快门声和冰裂声同时响起。"
+  },
+  {
+    "id": "zhou-yan-neon-vein",
+    "title": "霓虹静脉",
+    "artist": "周艳",
+    "theme": "夜店地下",
+    "category": "documentary",
+    "date": "2023-12",
+    "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=80",
+    "description": "地下音乐现场，彩色灯光在高感光胶片上炸裂。"
+  }
+]

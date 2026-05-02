@@ -1,0 +1,139 @@
+/* ═════════════════════════════════════════
+   PHOTO CARD — DIGITAL BRUTALISM
+   ═════════════════════════════════════════ */
+
+.photo-card {
+  position: relative;
+  border: var(--border-medium) solid var(--color-border-dim);
+  background: var(--color-surface);
+  transition: all var(--transition-fast);
+}
+
+.photo-card:hover {
+  border-color: var(--color-border);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 0 var(--color-accent);
+}
+
+/* Image container — no fixed ratio, lets image determine height for masonry */
+.photo-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+  line-height: 0; /* removes gap below image */
+}
+
+.photo-card__placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+.photo-card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0;
+  transition: opacity 400ms ease, transform 500ms ease;
+}
+
+.photo-card__image--visible {
+  opacity: 1;
+}
+
+.photo-card:hover .photo-card__image {
+  transform: scale(1.03);
+}
+
+/* Hover overlay */
+.photo-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.photo-card:hover .photo-card__overlay {
+  opacity: 1;
+}
+
+.photo-card__view {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* Info panel */
+.photo-card__info {
+  padding: var(--space-md);
+  border-top: 1px solid var(--color-border-dim);
+}
+
+.photo-card__artist {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.photo-card__title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.photo-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.photo-card__theme {
+  color: var(--color-text-muted);
+}
+
+.photo-card__sep {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.photo-card__category {
+  color: var(--color-text-muted);
+  padding: 2px 6px;
+  border: 1px solid var(--color-border-dim);
+}
+
+@media (max-width: 600px) {
+  .photo-card__info {
+    padding: var(--space-sm);
+  }
+
+  .photo-card__artist {
+    font-size: 0.85rem;
+  }
+
+  .photo-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .photo-card__overlay {
+    display: none;
+  }
+}

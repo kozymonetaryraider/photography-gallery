@@ -1,0 +1,257 @@
+/* ═════════════════════════════════════════
+   GALLERY — WATERFALL MASONRY + OVERLAP
+   ═════════════════════════════════════════ */
+
+.gallery {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.gallery--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Hero ── */
+.gallery__hero {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+  border-bottom: var(--border-thick) solid var(--color-border);
+}
+
+.gallery__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.gallery__title-line {
+  display: block;
+}
+
+.gallery__title-line--accent {
+  color: var(--color-accent);
+  font-size: clamp(3rem, 10vw, 7rem);
+  margin-top: -0.05em;
+}
+
+.gallery__subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: var(--space-lg);
+}
+
+/* ── Filter bar ── */
+.gallery__filter-bar {
+  border-bottom: var(--border-medium) solid var(--color-border-dim);
+}
+
+.gallery__filter-inner {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-md) 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery__filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border-dim);
+  background: transparent;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.gallery__filter-btn:hover {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.gallery__filter-btn--active {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+.gallery__filter-btn--active .gallery__filter-bracket {
+  color: var(--color-bg);
+}
+
+.gallery__filter-bracket {
+  font-weight: 700;
+  font-size: 0.6rem;
+  color: var(--color-accent);
+}
+
+/* ══════════════════════════════════════════
+   MASONRY COLUMNS — WATERFALL + OVERLAP
+   ══════════════════════════════════════════ */
+
+.gallery__masonry {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+}
+
+/* The columns wrapper — horizontal overflow allowed for overlap to escape */
+.gallery__columns {
+  column-count: 3;
+  column-gap: var(--space-lg);
+  overflow: visible; /* let overlapping items escape */
+}
+
+/* Each column item */
+.gallery__col-item {
+  break-inside: avoid;
+  margin-bottom: var(--space-sm); /* cards stack close for overlap */
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+
+  /* stagger fade-in */
+  opacity: 0;
+  animation: colItemAppear 500ms ease forwards;
+  animation-delay: calc(var(--index, 0) * 50ms);
+}
+
+@keyframes colItemAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Overlap shifts per item ── */
+
+/* Pull some items UP to overlap the card above */
+.gallery__col-item:nth-child(2) {
+  z-index: 3;
+  margin-top: -24px;
+}
+.gallery__col-item:nth-child(4) {
+  z-index: 2;
+  margin-top: -32px;
+}
+.gallery__col-item:nth-child(6) {
+  z-index: 4;
+  margin-top: -16px;
+}
+.gallery__col-item:nth-child(8) {
+  z-index: 1;
+  margin-top: -40px;
+}
+.gallery__col-item:nth-child(9) {
+  margin-top: -20px;
+  z-index: 3;
+}
+.gallery__col-item:nth-child(11) {
+  z-index: 2;
+  margin-top: -28px;
+}
+
+/* Slight rotation on some items for the "scattered" feel */
+.gallery__col-item:nth-child(3) {
+  transform: rotate(-0.5deg);
+}
+.gallery__col-item:nth-child(5) {
+  transform: rotate(0.8deg);
+}
+.gallery__col-item:nth-child(7) {
+  transform: rotate(-0.3deg);
+}
+.gallery__col-item:nth-child(10) {
+  transform: rotate(0.5deg);
+}
+
+/* ── Footer ── */
+.gallery__footer {
+  padding-bottom: var(--space-2xl);
+}
+
+.gallery__footer-divider {
+  margin-bottom: var(--space-lg);
+}
+
+.gallery__footer-text {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+
+@media (max-width: 1000px) {
+  .gallery__columns {
+    column-count: 2;
+    column-gap: var(--space-md);
+  }
+
+  /* Reduce overlap on tablet */
+  .gallery__col-item:nth-child(2),
+  .gallery__col-item:nth-child(4),
+  .gallery__col-item:nth-child(6),
+  .gallery__col-item:nth-child(8),
+  .gallery__col-item:nth-child(9),
+  .gallery__col-item:nth-child(11) {
+    margin-top: -12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery__columns {
+    column-count: 1;
+    column-gap: 0;
+  }
+
+  .gallery__col-item {
+    margin-bottom: 0;
+  }
+
+  /* Less overlap on mobile */
+  .gallery__col-item:nth-child(2),
+  .gallery__col-item:nth-child(4),
+  .gallery__col-item:nth-child(6),
+  .gallery__col-item:nth-child(8),
+  .gallery__col-item:nth-child(9),
+  .gallery__col-item:nth-child(11) {
+    margin-top: -8px;
+  }
+
+  .gallery__col-item:nth-child(3),
+  .gallery__col-item:nth-child(5),
+  .gallery__col-item:nth-child(7),
+  .gallery__col-item:nth-child(10) {
+    transform: none;
+  }
+
+  .gallery__hero {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-lg);
+  }
+
+  .gallery__filter-inner {
+    gap: var(--space-xs);
+  }
+}
