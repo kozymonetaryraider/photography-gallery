@@ -13,24 +13,26 @@ export default function Header() {
     <header className="header brutal-divider">
       <div className="header__inner container">
         <Link to="/" className="header__logo">
-          <span className="header__logo-icon">≡</span>
-          <span className="header__logo-text">RAW GRAIN</span>
+          <span className="header__logo-text">ian</span>
         </Link>
 
         <nav className="header__nav">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`header__nav-link ${
-                location.pathname === item.path ? 'header__nav-link--active' : ''
-              }`}
-            >
-              <span className="header__nav-bracket">[</span>
-              {item.label}
-              <span className="header__nav-bracket">]</span>
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`header__nav-link ${
+                  isActive ? 'header__nav-link--active' : ''
+                }`}
+              >
+                {isActive && <span className="header__nav-bracket">[</span>}
+                {item.label}
+                {isActive && <span className="header__nav-bracket">]</span>}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="header__counter">

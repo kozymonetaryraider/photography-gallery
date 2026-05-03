@@ -120,9 +120,10 @@
 .photo-detail__title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.5rem);
-  line-height: 0.95;
+  line-height: 1.0;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  font-weight: 700;
   color: var(--color-accent);
 }
 
@@ -150,7 +151,7 @@
   font-family: var(--font-display);
   font-size: 1.25rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   color: var(--color-text);
 }
 
@@ -213,6 +214,7 @@
   font-family: var(--font-display);
   font-size: 1rem;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
   display: block;
 }
 
