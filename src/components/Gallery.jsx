@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import photosData from '../data/photos.json';
 import HERO_PHOTO_IDS from '../data/hero-photos.js';
@@ -12,29 +12,47 @@ const heroPhotos = HERO_PHOTO_IDS
   .map((id) => photosData.find((p) => p.id === id))
   .filter(Boolean);
 
-/* ── Track which hero entries are portrait (SKYOCEAN) ── */
-const portraitIds = new Set(['skyocean-000045310016']);
-
 /**
- * Each spread config:
- *   type: 'hero' | 'left' | 'right' | 'full' | 'portrait-hero'
- *   r:    rotation deg (subtle book-imperfection tilt)
- *   w:    photo width as fraction of viewport (0-1)
+ * Each photo is permanently paired with its layout by index:
+ *   LAYOUTS[i] ←→ heroPhotos[i]
+ *
+ * When shuffled, the shuffled indices keep each photo + layout
+ * paired together — so every photo always gets its correct layout.
  */
-const SPREADS = heroPhotos.map((photo, i) => {
-  if (portraitIds.has(photo.id)) return { type: 'portrait-hero', r: 0, w: 1 };
-  if (i === 0) return { type: 'hero', r: 0, w: 1 };
-  const mod = (i - 1) % 3;
-  if (mod === 0) return { type: 'left',  r: -0.8, w: 0.62 };
-  if (mod === 1) return { type: 'right', r: 0.7,  w: 0.58 };
-  return { type: 'full', r: 0,    w: 1 };
-});
+const LAYOUTS = [
+  /*  0 ATM Hanson  */ { type: 'left',             r: -0.8, w: 0.62 },
+  /*  1 Afircakid   */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /*  2 Billionhappy*/ { type: 'full',             r: 0,    w: 1    },
+  /*  3 Bloodzboi   */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /*  4 CashTrippy  */ { type: 'left',             r: -0.8, w: 0.62 },
+  /*  5 ChalkyWong  */ { type: 'full',             r: 0,    w: 1    },
+  /*  6 DJ YIDA     */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /*  7 Haysen Cheng*/ { type: 'left',             r: -0.8, w: 0.62 },
+  /*  8 Lil Asian   */ { type: 'full',             r: 0,    w: 1    },
+  /*  9 SKYOCEAN    */ { type: 'portrait-contain', r: 0,    w: 1    },
+  /* 10 Sebii       */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /* 11 THOME       */ { type: 'portrait-contain', r: 0,    w: 1    },
+  /* 12 TOYOKI      */ { type: 'full',             r: 0,    w: 1    },
+  /* 13 Vansdaddy   */ { type: 'full',             r: 0,    w: 1    },
+  /* 14 YHL         */ { type: 'full',             r: 0,    w: 1    },
+  /* 15 王齐铭WatchMe*/ { type: 'left',            r: -0.8, w: 0.62 },
+];
 
 export default function Gallery() {
   const trackRef = useRef(null);
   const [page, setPage] = useState(0);
   const [ready, setReady] = useState(false);
   const autoRef = useRef({ paused: false, timer: null, resumeTimer: null });
+
+  /* ── Randomize photo order on each page load ── */
+  const shuffledOrder = useMemo(() => {
+    const indices = Array.from({ length: heroPhotos.length }, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return indices;
+  }, []);
 
   /* ── Horizontal wheel-to-scroll (window level) ── */
   useEffect(() => {
@@ -81,7 +99,6 @@ export default function Gallery() {
       a.resumeTimer = null;
       startAutoTimer();
     }, RESUME_DELAY);
-    // Force re-render to update indicator
     setPage((p) => p);
   }, []);
 
@@ -148,8 +165,9 @@ export default function Gallery() {
     <main className={`gallery ${ready ? 'gallery--ready' : ''}`}>
       {/* ── Horizontal scroll track ── */}
       <div className="gallery__track" ref={trackRef}>
-        {SPREADS.map((cfg, i) => {
-          const photo = heroPhotos[i];
+        {shuffledOrder.map((idx, i) => {
+          const photo = heroPhotos[idx];
+          const cfg = LAYOUTS[idx];
           return (
             <Link
               key={photo.id}
@@ -174,14 +192,6 @@ export default function Gallery() {
                   <span className="gallery__spread-dot">·</span>
                   <span className="gallery__spread-category">{photo.category}</span>
                 </div>
-                {cfg.type === 'hero' && (
-                  <div className="gallery__spread-brand">
-                    <span className="gallery__spread-brand-name">RAW GRAIN</span>
-                    <span className="gallery__spread-brand-sub">
-                      {heroPhotos.length} ARTISTS · ONE FRAME EACH
-                    </span>
-                  </div>
-                )}
               </div>
             </Link>
           );
