@@ -1,18 +1,28 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import photosData from '../data/photos.json';
+import HERO_PHOTO_IDS from '../data/hero-photos.js';
 import './Gallery.css';
 
 const AUTO_INTERVAL = 4000; // ms per page
 const RESUME_DELAY = 8000;  // ms of inactivity before auto-scroll resumes
 
+/* ── Filter down to one hero photo per artist ── */
+const heroPhotos = HERO_PHOTO_IDS
+  .map((id) => photosData.find((p) => p.id === id))
+  .filter(Boolean);
+
+/* ── Track which hero entries are portrait (SKYOCEAN) ── */
+const portraitIds = new Set(['skyocean-000045310016']);
+
 /**
  * Each spread config:
- *   type: 'hero' | 'left' | 'right' | 'full'
+ *   type: 'hero' | 'left' | 'right' | 'full' | 'portrait-hero'
  *   r:    rotation deg (subtle book-imperfection tilt)
  *   w:    photo width as fraction of viewport (0-1)
  */
-const SPREADS = photosData.map((photo, i) => {
+const SPREADS = heroPhotos.map((photo, i) => {
+  if (portraitIds.has(photo.id)) return { type: 'portrait-hero', r: 0, w: 1 };
   if (i === 0) return { type: 'hero', r: 0, w: 1 };
   const mod = (i - 1) % 3;
   if (mod === 0) return { type: 'left',  r: -0.8, w: 0.62 };
@@ -82,7 +92,7 @@ export default function Gallery() {
       if (a.paused) return;
       const track = trackRef.current;
       if (!track) return;
-      const total = photosData.length;
+      const total = heroPhotos.length;
       const cur = Math.round(track.scrollLeft / window.innerWidth);
       const next = (cur + 1) % total;
       track.scrollTo({ left: next * window.innerWidth, behavior: 'smooth' });
@@ -116,7 +126,7 @@ export default function Gallery() {
 
     const onScroll = () => {
       const idx = Math.round(track.scrollLeft / window.innerWidth);
-      setPage(Math.min(idx, photosData.length - 1));
+      setPage(Math.min(idx, heroPhotos.length - 1));
     };
 
     track.addEventListener('scroll', onScroll, { passive: true });
@@ -139,7 +149,7 @@ export default function Gallery() {
       {/* ── Horizontal scroll track ── */}
       <div className="gallery__track" ref={trackRef}>
         {SPREADS.map((cfg, i) => {
-          const photo = photosData[i];
+          const photo = heroPhotos[i];
           return (
             <Link
               key={photo.id}
@@ -168,7 +178,7 @@ export default function Gallery() {
                   <div className="gallery__spread-brand">
                     <span className="gallery__spread-brand-name">RAW GRAIN</span>
                     <span className="gallery__spread-brand-sub">
-                      {photosData.length} FRAMES · 35MM FILM
+                      {heroPhotos.length} ARTISTS · ONE FRAME EACH
                     </span>
                   </div>
                 )}
@@ -188,7 +198,7 @@ export default function Gallery() {
         </span>
         <span className="gallery__indicator-sep">/</span>
         <span className="gallery__indicator-total">
-          {String(photosData.length).padStart(2, '0')}
+          {String(heroPhotos.length).padStart(2, '0')}
         </span>
       </div>
     </main>

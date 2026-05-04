@@ -137,6 +137,35 @@
   to   { transform: scale(1); }
 }
 
+/* ── PORTRAIT-HERO — vertical photo adapted to full-viewport banner ── */
+.gallery__spread--portrait-hero .gallery__spread-image-wrap {
+  inset: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.gallery__spread--portrait-hero .gallery__spread-image {
+  object-fit: cover;
+  object-position: center 18%;
+  animation: heroZoom 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+/* Stronger vignette to frame the portrait */
+.gallery__spread--portrait-hero .gallery__spread-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 35%, transparent 15%, rgba(0,0,0,0.65) 100%),
+    linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 30%),
+    linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%);
+}
+
 /* ── LEFT — photo on left side ── */
 .gallery__spread--left .gallery__spread-image-wrap {
   left: 4vw;
@@ -181,14 +210,16 @@
 }
 
 /* ── HERO text — bottom-left ── */
-.gallery__spread--hero .gallery__spread-text {
+.gallery__spread--hero .gallery__spread-text,
+.gallery__spread--portrait-hero .gallery__spread-text {
   bottom: 10vh;
   left: 6vw;
   right: 6vw;
   animation: textFade 1s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.gallery__spread--hero .gallery__spread-title {
+.gallery__spread--hero .gallery__spread-title,
+.gallery__spread--portrait-hero .gallery__spread-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 8vw, 4.5rem);
   line-height: 0.95;
@@ -200,7 +231,8 @@
   margin-bottom: var(--space-xs);
 }
 
-.gallery__spread--hero .gallery__spread-meta {
+.gallery__spread--hero .gallery__spread-meta,
+.gallery__spread--portrait-hero .gallery__spread-meta {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
@@ -212,7 +244,8 @@
   text-shadow: 0 1px 8px rgba(0,0,0,0.3);
 }
 
-.gallery__spread--hero .gallery__spread-dot {
+.gallery__spread--hero .gallery__spread-dot,
+.gallery__spread--portrait-hero .gallery__spread-dot {
   color: var(--color-accent);
 }
 
@@ -466,7 +499,8 @@ body:not(.gallery-active) .header {
     max-width: 560px;
   }
 
-  .gallery__spread--hero .gallery__spread-text {
+  .gallery__spread--hero .gallery__spread-text,
+  .gallery__spread--portrait-hero .gallery__spread-text {
     bottom: 12vh;
     left: 8vw;
   }
@@ -506,7 +540,8 @@ body:not(.gallery-active) .header {
     left: 10vw;
   }
 
-  .gallery__spread--hero .gallery__spread-text {
+  .gallery__spread--hero .gallery__spread-text,
+  .gallery__spread--portrait-hero .gallery__spread-text {
     bottom: 14vh;
     left: 10vw;
   }
