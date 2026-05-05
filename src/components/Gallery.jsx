@@ -20,20 +20,20 @@ const heroPhotos = HERO_PHOTO_IDS
  * paired together — so every photo always gets its correct layout.
  */
 const LAYOUTS = [
-  /*  0 ATM Hanson  */ { type: 'left',             r: -0.8, w: 0.62 },
-  /*  1 Afircakid   */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /*  0 ATM Hanson  */ { type: 'full',             r: 0,    w: 1    },
+  /*  1 Afircakid   */ { type: 'portrait-contain', r: 0,    w: 1    },
   /*  2 Billionhappy*/ { type: 'full',             r: 0,    w: 1    },
   /*  3 Bloodzboi   */ { type: 'right',            r: 0.7,  w: 0.58 },
   /*  4 CashTrippy  */ { type: 'left',             r: -0.8, w: 0.62 },
   /*  5 ChalkyWong  */ { type: 'full',             r: 0,    w: 1    },
-  /*  6 DJ YIDA     */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /*  6 DJ YIDA     */ { type: 'full',             r: 0,    w: 1    },
   /*  7 Haysen Cheng*/ { type: 'left',             r: -0.8, w: 0.62 },
-  /*  8 Lil Asian   */ { type: 'full',             r: 0,    w: 1    },
+  /*  8 Lil Asian   */ { type: 'portrait-contain', r: 0,    w: 1    },
   /*  9 SKYOCEAN    */ { type: 'portrait-contain', r: 0,    w: 1    },
-  /* 10 Sebii       */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /* 10 Sebii       */ { type: 'full',             r: 0,    w: 1    },
   /* 11 THOME       */ { type: 'portrait-contain', r: 0,    w: 1    },
-  /* 12 TOYOKI      */ { type: 'full',             r: 0,    w: 1    },
-  /* 13 Vansdaddy   */ { type: 'full',             r: 0,    w: 1    },
+  /* 12 TOYOKI      */ { type: 'portrait-contain', r: 0,    w: 1    },
+  /* 13 Vansdaddy   */ { type: 'portrait-contain', r: 0,    w: 1    },
   /* 14 YHL         */ { type: 'full',             r: 0,    w: 1    },
   /* 15 王齐铭WatchMe*/ { type: 'left',            r: -0.8, w: 0.62 },
 ];
