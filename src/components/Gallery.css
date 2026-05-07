@@ -28,11 +28,7 @@
   inset: 0;
   display: flex;
   overflow-x: auto;
-  overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
-  overscroll-behavior: none;
   scrollbar-width: none;
 }
 .gallery__track::-webkit-scrollbar {
@@ -481,21 +477,44 @@
 }
 
 .gallery__artist-btn--active {
-  color: var(--color-accent);
   padding-left: var(--space-sm);
-  border-top-color: var(--color-accent);
+  border: 1px solid var(--color-text);
 }
 
 .gallery__artist-name {
   font-weight: 700;
   display: block;
+  color: var(--color-text);
 }
 
 .gallery__artist-theme {
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   letter-spacing: 0.12em;
-  color: var(--color-text-muted);
-  opacity: 0.6;
+  /* Metallic gradient text — same effect as 35mm badge */
+  background: linear-gradient(
+    135deg,
+    #a0a0a0 0%,
+    #d0d0d0 6%,
+    #ffffff 14%,
+    #e3f2fd 22%,
+    #c8e6ff 30%,
+    #ffffff 38%,
+    #fff8e1 46%,
+    #ffffff 54%,
+    #c8e6ff 62%,
+    #e3f2fd 70%,
+    #ffffff 78%,
+    #d0d0d0 86%,
+    #a0a0a0 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 6px rgba(200, 230, 255, 0.35))
+          drop-shadow(0 1px 1px rgba(0,0,0,0.5))
+          drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+  animation: metalShimmer 2.5s ease-in-out infinite;
 }
 
 /* ── Right: photo display ── */
@@ -543,11 +562,11 @@
   opacity: 0.3;
 }
 
-/* ── Photo grid (3 columns in right panel) ── */
+/* ── Photo grid (2 columns in right panel) ── */
 .gallery__artist-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xs);
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
   animation: gridFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -789,7 +808,7 @@ body:not(.gallery-active) .header {
   }
 
   .gallery__artist-btn--active {
-    border-color: var(--color-accent);
+    border-color: var(--color-text);
   }
 
   .gallery__artist-btn:hover,
@@ -811,7 +830,7 @@ body:not(.gallery-active) .header {
   }
 
   .gallery__artist-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

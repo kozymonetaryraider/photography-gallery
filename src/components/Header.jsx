@@ -2,8 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
 const NAV_ITEMS = [
-  { path: '/', label: '作品' },
-  { path: '/about', label: '关于' },
+  { path: '/', label: 'PORTFOLIO' },
+  { path: '/about', label: 'ABOUT' },
 ];
 
 export default function Header() {
@@ -13,7 +13,7 @@ export default function Header() {
     <header className="header brutal-divider">
       <div className="header__inner container">
         <Link to="/" className="header__logo">
-          <span className="header__logo-text">ian</span>
+          <span className="header__logo-text">iAN</span>
         </Link>
 
         <nav className="header__nav">
@@ -36,7 +36,6 @@ export default function Header() {
         </nav>
 
         <div className="header__counter">
-          <span className="header__counter-label">胶片</span>
           <span className="header__counter-num">35mm</span>
         </div>
       </div>

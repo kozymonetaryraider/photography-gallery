@@ -136,7 +136,6 @@ export default function Gallery() {
     startAutoTimer();
 
     const interact = () => pauseAutoScroll();
-    window.addEventListener('wheel', interact, { passive: true });
     window.addEventListener('keydown', interact);
     window.addEventListener('touchstart', interact, { passive: true });
     window.addEventListener('mousedown', interact);
@@ -145,7 +144,6 @@ export default function Gallery() {
       const a = autoRef.current;
       if (a.timer) clearInterval(a.timer);
       if (a.resumeTimer) clearTimeout(a.resumeTimer);
-      window.removeEventListener('wheel', interact);
       window.removeEventListener('keydown', interact);
       window.removeEventListener('touchstart', interact);
       window.removeEventListener('mousedown', interact);

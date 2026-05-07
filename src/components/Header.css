@@ -34,9 +34,8 @@
 }
 
 .header__logo-text {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: 1.4rem;
-  font-style: italic;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
