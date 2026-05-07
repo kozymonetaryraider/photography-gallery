@@ -36,6 +36,7 @@ const LAYOUTS = [
   /* 13 Vansdaddy   */ { type: 'portrait-contain', r: -0.8, w: 1, ox: 'left',   oy: 'bottom' },
   /* 14 YHL         */ { type: 'full',             r: 0,    w: 1    },
   /* 15 王齐铭WatchMe*/ { type: 'left',            r: -0.8, w: 0.62 },
+  /* 16 Asen        */ { type: 'full',             r: 0,    w: 1    },
 ];
 
 /* ── Group all photos by artist, preserving HERO_PHOTO_IDS order ── */
@@ -71,6 +72,7 @@ export default function Gallery() {
   const [ready, setReady] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [lightboxPhoto, setLightboxPhoto] = useState(null);
+  const [rotation, setRotation] = useState(0);
   const autoRef = useRef({ paused: false, timer: null, resumeTimer: null });
 
   /* ── Randomize photo order on each page load ── */
@@ -203,12 +205,7 @@ export default function Gallery() {
                 </div>
 
                 <div className="gallery__spread-text">
-                  <h2 className="gallery__spread-title">{photo.title}</h2>
-                  <div className="gallery__spread-meta">
-                    <span className="gallery__spread-artist">{photo.artist}</span>
-                    <span className="gallery__spread-dot">·</span>
-                    <span className="gallery__spread-category">{photo.category}</span>
-                  </div>
+                  <span className="gallery__spread-artist">·{photo.artist}</span>
                 </div>
               </Link>
             );
@@ -304,18 +301,29 @@ export default function Gallery() {
           LIGHTBOX — fullscreen photo enlargement
           ══════════════════════════════════════════════ */}
       {lightboxPhoto && (
-        <div className="gallery__lightbox" onClick={() => setLightboxPhoto(null)}>
+        <div className="gallery__lightbox" onClick={() => { setLightboxPhoto(null); setRotation(0); }}>
           <button
             className="gallery__lightbox-close"
-            onClick={() => setLightboxPhoto(null)}
+            onClick={() => { setLightboxPhoto(null); setRotation(0); }}
           >
             ×
+          </button>
+          <button
+            className="gallery__lightbox-rotate"
+            onClick={(e) => { e.stopPropagation(); setRotation((r) => (r + 90) % 360); }}
+            title="旋转"
+          >
+            ↻
           </button>
           <img
             className="gallery__lightbox-image"
             src={lightboxPhoto.image}
             alt={lightboxPhoto.artist}
             onClick={(e) => e.stopPropagation()}
+            style={{
+              transform: `rotate(${rotation}deg)`,
+              ...(rotation % 180 === 90 ? { maxWidth: '90vh', maxHeight: '92vw' } : {}),
+            }}
           />
         </div>
       )}
