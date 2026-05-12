@@ -166,6 +166,12 @@ button {
   padding: 0 var(--space-lg);
 }
 
+@media (max-width: 500px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+}
+
 /* Image loading placeholder */
 .image-loading {
   background: var(--color-surface);

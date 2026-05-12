@@ -30,6 +30,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 .gallery__track::-webkit-scrollbar {
   display: none;
@@ -776,5 +777,43 @@ body:not(.gallery-active) .header {
   .gallery__artist-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 2px;
+  }
+
+  /* ── Hero: left/right spreads take more width on small screens ── */
+  .gallery__spread--left .gallery__spread-image-wrap,
+  .gallery__spread--right .gallery__spread-image-wrap {
+    width: calc(var(--w, 0.62) * 90vw);
+    max-width: none;
+  }
+
+  .gallery__spread--left {
+    justify-content: flex-start;
+  }
+
+  .gallery__indicator {
+    bottom: var(--space-lg);
+    font-size: 0.55rem;
+    padding: 2px var(--space-sm);
+  }
+
+  .gallery__lightbox-close {
+    top: var(--space-sm);
+    right: var(--space-sm);
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .gallery__lightbox-rotate {
+    bottom: var(--space-sm);
+    right: var(--space-sm);
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+
+  .gallery__lightbox-image {
+    max-width: 100vw;
+    max-height: 100vh;
   }
 }
