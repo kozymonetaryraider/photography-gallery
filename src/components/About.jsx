@@ -67,13 +67,13 @@ export default function About() {
         </div>
         <div className="about__contact">
           {/* Email */}
-          <a href="mailto:" className="about__contact-item">
+          <a href="mailto:kozymonetaryraider@outlook.com" className="about__contact-item">
             <span className="about__contact-icon-wrap">
               <MailIcon />
             </span>
             <span className="about__contact-info">
               <span className="about__contact-label">EMAIL</span>
-              <span className="about__contact-value">邮箱地址待补充</span>
+              <span className="about__contact-value">kozymonetaryraider@outlook.com</span>
             </span>
           </a>
 
