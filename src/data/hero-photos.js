@@ -5,6 +5,7 @@
 const HERO_PHOTO_IDS = [
   'atm-hanson-000004290003',            // ATM Hanson — landscape
   'afircakid-gameboi-000004290001',     // Afircakid — landscape
+  'asen-0c9a6a928n22941651d015cd92ffeacc', // Asen
   'billionhappy-000007890025',          // Billionhappy — landscape
   'bloodzboi-000029640006',             // Bloodzboi — landscape
   'cashtrippy-000004290005',            // CashTrippy — landscape
@@ -19,7 +20,6 @@ const HERO_PHOTO_IDS = [
   'vansdaddy-都市醉汉-000046560012',       // Vansdaddy — landscape
   'yhl-000017390026',                   // YHL — landscape
   '王齐铭watchme-000046550030',           // 王齐铭WatchMe — landscape
-  'asen-0c9a6a928n22941651d015cd92ffeacc', // Asen
 ];
 
 export default HERO_PHOTO_IDS;

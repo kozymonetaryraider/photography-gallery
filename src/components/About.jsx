@@ -78,24 +78,24 @@ export default function About() {
           </a>
 
           {/* 抖音 */}
-          <a href="#" className="about__contact-item" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.douyin.com/user/MS4wLjABAAAATFx7TsQ7LY0GQPsn3EP8V4HXUUN4brFV3vWF-idiyr6vLyOqmwGNfq8_5FroxG_K" className="about__contact-item" target="_blank" rel="noopener noreferrer">
             <span className="about__contact-icon-wrap">
               <DouyinIcon />
             </span>
             <span className="about__contact-info">
               <span className="about__contact-label">抖音</span>
-              <span className="about__contact-value">账号待补充</span>
+              <span className="about__contact-value">@kozymonetaryraider</span>
             </span>
           </a>
 
           {/* 小红书 */}
-          <a href="#" className="about__contact-item" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.xiaohongshu.com/user/profile/62fa149f000000001200cf97" className="about__contact-item" target="_blank" rel="noopener noreferrer">
             <span className="about__contact-icon-wrap">
               <XiaohongshuIcon />
             </span>
             <span className="about__contact-info">
               <span className="about__contact-label">小红书</span>
-              <span className="about__contact-value">账号待补充</span>
+              <span className="about__contact-value">@kozymonetaryraider</span>
             </span>
           </a>
         </div>

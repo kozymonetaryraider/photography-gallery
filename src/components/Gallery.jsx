@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import photosData from '../data/photos.json';
 import HERO_PHOTO_IDS from '../data/hero-photos.js';
 import './Gallery.css';
@@ -22,21 +21,21 @@ const heroPhotos = HERO_PHOTO_IDS
 const LAYOUTS = [
   /*  0 ATM Hanson  */ { type: 'full',             r: 0,    w: 1    },
   /*  1 Afircakid   */ { type: 'portrait-contain', r: -1.5, w: 1, ox: 'left',   oy: 'center' },
-  /*  2 Billionhappy*/ { type: 'full',             r: 0,    w: 1    },
-  /*  3 Bloodzboi   */ { type: 'right',            r: 0.7,  w: 0.58 },
-  /*  4 CashTrippy  */ { type: 'left',             r: -0.8, w: 0.62 },
-  /*  5 ChalkyWong  */ { type: 'full',             r: 0,    w: 1    },
-  /*  6 DJ YIDA     */ { type: 'full',             r: 0,    w: 1    },
-  /*  7 Haysen Cheng*/ { type: 'left',             r: -0.8, w: 0.62 },
-  /*  8 Lil Asian   */ { type: 'portrait-contain', r: 0.8,  w: 1, ox: 'right',  oy: 'center' },
-  /*  9 SKYOCEAN    */ { type: 'portrait-contain', r: 0,    w: 1, ox: 'center', oy: 'center' },
-  /* 10 Sebii       */ { type: 'full',             r: 0,    w: 1    },
-  /* 11 THOME       */ { type: 'portrait-contain', r: -1.2, w: 1, ox: 'center', oy: 'top'    },
-  /* 12 TOYOKI      */ { type: 'portrait-contain', r: 1.5,  w: 1, ox: 'right',  oy: 'bottom' },
-  /* 13 Vansdaddy   */ { type: 'portrait-contain', r: -0.8, w: 1, ox: 'left',   oy: 'bottom' },
-  /* 14 YHL         */ { type: 'full',             r: 0,    w: 1    },
-  /* 15 王齐铭WatchMe*/ { type: 'left',            r: -0.8, w: 0.62 },
-  /* 16 Asen        */ { type: 'full',             r: 0,    w: 1    },
+  /*  2 Asen        */ { type: 'full',             r: 0,    w: 1    },
+  /*  3 Billionhappy*/ { type: 'full',             r: 0,    w: 1    },
+  /*  4 Bloodzboi   */ { type: 'right',            r: 0.7,  w: 0.58 },
+  /*  5 CashTrippy  */ { type: 'left',             r: -0.8, w: 0.62 },
+  /*  6 ChalkyWong  */ { type: 'full',             r: 0,    w: 1    },
+  /*  7 DJ YIDA     */ { type: 'full',             r: 0,    w: 1    },
+  /*  8 Haysen Cheng*/ { type: 'left',             r: -0.8, w: 0.62 },
+  /*  9 Lil Asian   */ { type: 'portrait-contain', r: 0.8,  w: 1, ox: 'right',  oy: 'center' },
+  /* 10 SKYOCEAN    */ { type: 'portrait-contain', r: 0,    w: 1, ox: 'center', oy: 'center' },
+  /* 11 Sebii       */ { type: 'full',             r: 0,    w: 1    },
+  /* 12 THOME       */ { type: 'portrait-contain', r: -1.2, w: 1, ox: 'center', oy: 'top'    },
+  /* 13 TOYOKI      */ { type: 'portrait-contain', r: 1.5,  w: 1, ox: 'right',  oy: 'bottom' },
+  /* 14 Vansdaddy   */ { type: 'portrait-contain', r: -0.8, w: 1, ox: 'left',   oy: 'bottom' },
+  /* 15 YHL         */ { type: 'full',             r: 0,    w: 1    },
+  /* 16 王齐铭WatchMe*/ { type: 'left',            r: -0.8, w: 0.62 },
 ];
 
 /* ── Group all photos by artist, preserving HERO_PHOTO_IDS order ── */
@@ -68,12 +67,21 @@ const artistEntries = (() => {
 
 export default function Gallery() {
   const trackRef = useRef(null);
+  const artistsRef = useRef(null);
   const [page, setPage] = useState(0);
   const [ready, setReady] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [lightboxPhoto, setLightboxPhoto] = useState(null);
   const [rotation, setRotation] = useState(0);
   const autoRef = useRef({ paused: false, timer: null, resumeTimer: null });
+
+  /* ── Click hero spread → select artist & scroll to Index ── */
+  const handleSpreadClick = useCallback((artistName) => {
+    setSelectedArtist(artistName);
+    setTimeout(() => {
+      artistsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }, []);
 
   /* ── Randomize photo order on each page load ── */
   const shuffledOrder = useMemo(() => {
@@ -188,9 +196,9 @@ export default function Gallery() {
             const photo = heroPhotos[idx];
             const cfg = LAYOUTS[idx];
             return (
-              <Link
+              <button
                 key={photo.id}
-                to={`/photo/${photo.id}`}
+                onClick={() => handleSpreadClick(photo.artist)}
                 className={`gallery__spread gallery__spread--${cfg.type}`}
                 style={{ '--r': cfg.r, '--w': cfg.w, '--ox': cfg.ox || 'center', '--oy': cfg.oy || 'center' }}
               >
@@ -207,7 +215,7 @@ export default function Gallery() {
                 <div className="gallery__spread-text">
                   <span className="gallery__spread-artist">·{photo.artist}</span>
                 </div>
-              </Link>
+              </button>
             );
           })}
         </div>
@@ -227,10 +235,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════
-          ARTIST INDEX — split: left list, right grid
-          ══════════════════════════════════════════════ */}
-      <section className="gallery__artists">
+      <section className="gallery__artists" ref={artistsRef}>
         <div className="gallery__artists-inner">
           <div className="gallery__artists-header">
             <span className="gallery__artists-header-line">═══════════════</span>

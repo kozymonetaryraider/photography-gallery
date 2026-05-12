@@ -49,6 +49,14 @@
   overflow: hidden;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 /* ── Image wrapper ── */
