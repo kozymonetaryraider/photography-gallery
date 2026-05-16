@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import photosData from '../data/photos.json';
+import { imageUrl } from '../utils/imageUrl.js';
 import './PhotoDetail.css';
 
 export default function PhotoDetail() {
@@ -62,7 +63,7 @@ export default function PhotoDetail() {
           <div className="photo-detail__image-wrap">
             {!loaded && <div className="photo-detail__placeholder image-loading" />}
             <img
-              src={photo.image}
+              src={imageUrl(photo.image)}
               alt={photo.title}
               className={`photo-detail__image ${
                 loaded ? 'photo-detail__image--loaded' : ''

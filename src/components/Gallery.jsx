@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import photosData from '../data/photos.json';
 import HERO_PHOTO_IDS from '../data/hero-photos.js';
+import { imageUrl } from '../utils/imageUrl.js';
 import './Gallery.css';
 
 const AUTO_INTERVAL = 4000; // ms per page
@@ -204,7 +205,7 @@ export default function Gallery() {
               >
                 <div className="gallery__spread-image-wrap">
                   <img
-                    src={photo.image}
+                    src={imageUrl(photo.image)}
                     alt={photo.title}
                     className="gallery__spread-image"
                     loading={i < 2 ? 'eager' : 'lazy'}
@@ -284,7 +285,7 @@ export default function Gallery() {
                           onClick={() => setLightboxPhoto(photo)}
                         >
                           <img
-                            src={photo.image}
+                            src={imageUrl(photo.image)}
                             alt={photo.artist}
                             loading="lazy"
                           />
@@ -322,7 +323,7 @@ export default function Gallery() {
           </button>
           <img
             className="gallery__lightbox-image"
-            src={lightboxPhoto.image}
+            src={imageUrl(lightboxPhoto.image)}
             alt={lightboxPhoto.artist}
             onClick={(e) => e.stopPropagation()}
             style={{

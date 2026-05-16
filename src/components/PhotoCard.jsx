@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { imageUrl } from '../utils/imageUrl.js';
 import './PhotoCard.css';
 
 export default function PhotoCard({ photo }) {
@@ -9,7 +10,7 @@ export default function PhotoCard({ photo }) {
       <div className="photo-card__image-wrap">
         {!loaded && <div className="photo-card__placeholder image-loading" />}
         <img
-          src={photo.image}
+          src={imageUrl(photo.image)}
           alt={photo.title}
           className={`photo-card__image ${loaded ? 'photo-card__image--visible' : ''}`}
           loading="lazy"
