@@ -33,39 +33,56 @@
 
 /* ── Bio ── */
 .about__bio-text {
-  max-width: 680px;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.55fr) minmax(0, 2fr);
+  column-gap: clamp(2rem, 7vw, 8rem);
+  row-gap: var(--space-lg);
+  max-width: 1100px;
 }
 
 .about__bio-subtitle {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  display: grid;
+  gap: 0.35rem;
+  align-self: start;
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--color-text-secondary);
+  font-size: 0.68rem;
+  line-height: 1.35;
   color: var(--color-text-secondary);
-  letter-spacing: 0.1em;
-  margin-bottom: var(--space-xl);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
   user-select: none;
-  padding: var(--space-xs) var(--space-sm);
-  border: 1px solid var(--color-border-dim);
-  display: inline-block;
+}
+
+.about__bio-subtitle span:last-child {
+  color: var(--color-text-muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
 }
 
 .about__bio-body {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  line-height: 1.8;
+  font-size: clamp(0.95rem, 1.25vw, 1.08rem);
+  line-height: 1.9;
+  letter-spacing: 0.01em;
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-lg);
+  margin: 0;
+  grid-column: 2;
 }
 
-.about__bio-body:last-child {
-  margin-bottom: 0;
+.about__bio-body + .about__bio-body {
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border-dim);
 }
 
 /* ── Contact ── */
 .about__contact {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-lg);
-  max-width: 520px;
+  max-width: 1100px;
 }
 
 .about__contact-item {
@@ -148,6 +165,36 @@
   .about__section {
     padding-top: var(--space-2xl);
     padding-bottom: var(--space-2xl);
+  }
+
+  .about__section-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .about__bio-text {
+    display: block;
+    max-width: 38rem;
+  }
+
+  .about__bio-subtitle {
+    margin-bottom: var(--space-xl);
+  }
+
+  .about__bio-body {
+    font-size: 0.94rem;
+    line-height: 1.85;
+    letter-spacing: 0;
+  }
+
+  .about__bio-body + .about__bio-body {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+  }
+
+  .about__contact {
+    display: flex;
+    flex-direction: column;
+    max-width: 520px;
   }
 
   .about__contact-item {

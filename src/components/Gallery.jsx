@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import photosData from '../data/photos.json';
 import HERO_PHOTO_IDS from '../data/hero-photos.js';
 import { imageUrl } from '../utils/imageUrl.js';
@@ -12,34 +12,7 @@ const heroPhotos = HERO_PHOTO_IDS
   .map((id) => photosData.find((p) => p.id === id))
   .filter(Boolean);
 
-/**
- * Each photo is permanently paired with its layout by index:
- *   LAYOUTS[i] ←→ heroPhotos[i]
- *
- * When shuffled, the shuffled indices keep each photo + layout
- * paired together — so every photo always gets its correct layout.
- */
-const LAYOUTS = [
-  /*  0 ATM Hanson  */ { type: 'full',             r: 0,    w: 1    },
-  /*  1 Afircakid   */ { type: 'portrait-contain', r: -1.5, w: 1, ox: 'left',   oy: 'center' },
-  /*  2 Asen        */ { type: 'full',             r: 0,    w: 1    },
-  /*  3 Billionhappy*/ { type: 'full',             r: 0,    w: 1    },
-  /*  4 Bloodzboi   */ { type: 'right',            r: 0.7,  w: 0.58 },
-  /*  5 CashTrippy  */ { type: 'left',             r: -0.8, w: 0.62 },
-  /*  6 ChalkyWong  */ { type: 'full',             r: 0,    w: 1    },
-  /*  7 DJ YIDA     */ { type: 'full',             r: 0,    w: 1    },
-  /*  8 Haysen Cheng*/ { type: 'left',             r: -0.8, w: 0.62 },
-  /*  9 Lil Asian   */ { type: 'portrait-contain', r: 0.8,  w: 1, ox: 'right',  oy: 'center' },
-  /* 10 SKYOCEAN    */ { type: 'portrait-contain', r: 0,    w: 1, ox: 'center', oy: 'center' },
-  /* 11 Sebii       */ { type: 'full',             r: 0,    w: 1    },
-  /* 12 THOME       */ { type: 'portrait-contain', r: -1.2, w: 1, ox: 'center', oy: 'top'    },
-  /* 13 TOYOKI      */ { type: 'portrait-contain', r: 1.5,  w: 1, ox: 'right',  oy: 'bottom' },
-  /* 14 Vansdaddy   */ { type: 'portrait-contain', r: -0.8, w: 1, ox: 'left',   oy: 'bottom' },
-  /* 15 YHL         */ { type: 'full',             r: 0,    w: 1    },
-  /* 16 王齐铭WatchMe*/ { type: 'left',            r: -0.8, w: 0.62 },
-];
-
-/* ── Group all photos by artist, preserving HERO_PHOTO_IDS order ── */
+/* ── Group all photos by artist, sorted alphabetically for the index ── */
 const artistEntries = (() => {
   const groups = new Map();
   for (const p of photosData) {
@@ -51,19 +24,14 @@ const artistEntries = (() => {
     if (p.theme) g.themes.add(p.theme);
   }
   const order = [];
-  const seen = new Set();
-  for (const id of HERO_PHOTO_IDS) {
-    const p = photosData.find((ph) => ph.id === id);
-    if (p && !seen.has(p.artist)) {
-      seen.add(p.artist);
-      order.push({
-        name: p.artist,
-        themes: [...groups.get(p.artist).themes].filter(Boolean),
-        photos: groups.get(p.artist).photos,
-      });
-    }
+  for (const [name, group] of groups) {
+    order.push({
+      name,
+      themes: [...group.themes].filter(Boolean),
+      photos: group.photos,
+    });
   }
-  return order;
+  return order.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 })();
 
 export default function Gallery() {
@@ -82,16 +50,6 @@ export default function Gallery() {
     setTimeout(() => {
       artistsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
-  }, []);
-
-  /* ── Randomize photo order on each page load ── */
-  const shuffledOrder = useMemo(() => {
-    const indices = Array.from({ length: heroPhotos.length }, (_, i) => i);
-    for (let i = indices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j], indices[i]];
-    }
-    return indices;
   }, []);
 
   /* ── Keyboard arrow key navigation (only at top of page) ── */
@@ -128,6 +86,16 @@ export default function Gallery() {
     }, RESUME_DELAY);
     setPage((p) => p);
   }, []);
+
+  const changeSlide = useCallback((direction) => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const current = Math.round(track.scrollLeft / window.innerWidth);
+    const next = (current + direction + heroPhotos.length) % heroPhotos.length;
+    pauseAutoScroll();
+    track.scrollTo({ left: next * window.innerWidth, behavior: 'smooth' });
+  }, [pauseAutoScroll]);
 
   const startAutoTimer = useCallback(() => {
     const a = autoRef.current;
@@ -193,15 +161,12 @@ export default function Gallery() {
           ══════════════════════════════════════════════ */}
       <section className="gallery__hero">
         <div className="gallery__track" ref={trackRef}>
-          {shuffledOrder.map((idx, i) => {
-            const photo = heroPhotos[idx];
-            const cfg = LAYOUTS[idx];
+          {heroPhotos.map((photo, i) => {
             return (
               <button
                 key={photo.id}
                 onClick={() => handleSpreadClick(photo.artist)}
-                className={`gallery__spread gallery__spread--${cfg.type}`}
-                style={{ '--r': cfg.r, '--w': cfg.w, '--ox': cfg.ox || 'center', '--oy': cfg.oy || 'center' }}
+                className="gallery__spread"
               >
                 <div className="gallery__spread-image-wrap">
                   <img
@@ -219,6 +184,25 @@ export default function Gallery() {
               </button>
             );
           })}
+        </div>
+
+        <div className="gallery__navigation" aria-label="Portfolio navigation">
+          <button
+            className="gallery__nav-button gallery__nav-button--previous"
+            type="button"
+            aria-label="Previous artist"
+            onClick={() => changeSlide(-1)}
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <button
+            className="gallery__nav-button gallery__nav-button--next"
+            type="button"
+            aria-label="Next artist"
+            onClick={() => changeSlide(1)}
+          >
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
 
         {/* ── Page indicator ── */}

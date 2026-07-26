@@ -42,12 +42,15 @@ export default function About() {
         </div>
         <div className="about__bio">
           <div className="about__bio-text">
-            <p className="about__bio-subtitle">[ 35mm / Visual Archive / HK & SZ ]</p>
-            <p className="about__bio-body">
-              iAN is an analog photographer dedicated to youth subcultures and the underground hip-hop scene. Rejecting digital polish, his work channels 2000s editorial grit through heavy film grain, direct flash, and chaotic motion blur.
+            <p className="about__bio-subtitle">
+              <span>35mm / Visual Archive</span>
+              <span>Greater Bay Area</span>
             </p>
             <p className="about__bio-body">
-              Operating as an objective archivist, he captures the visceral tension between stage bravado and backstage intimacy—freezing the relentless truth for artists like Africakid, ASEN, Bloodzboi, Billionhappy, Thome and CashTrippy.
+              iAN is an analog photographer whose work explores youth subcultures, underground music, and contemporary street culture. Rejecting over-polished digital aesthetics, he utilizes heavy grain, direct flash, and restless motion blur to deliver images with honest texture and a raw edge.
+            </p>
+            <p className="about__bio-body">
+              An objective archivist, he moves fluidly between the stage, backstage, and the street—capturing performance bravado alongside intimate human moments and the nuanced gestures of clothing in context. He preserves unvarnished truths for artists while framing contemporary fashion and lifestyle culture.
             </p>
           </div>
         </div>

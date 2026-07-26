@@ -3,6 +3,7 @@ import './Header.css';
 
 const NAV_ITEMS = [
   { path: '/', label: 'PORTFOLIO' },
+  { path: '/lifestyle', label: 'LIFESTYLE' },
   { path: '/about', label: 'ABOUT' },
 ];
 

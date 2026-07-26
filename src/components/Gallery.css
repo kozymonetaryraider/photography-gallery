@@ -1,7 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   GALLERY — HORIZONTAL SCROLL PHOTOBOOK
-   Inspired by Jiro Konami's physical photo-book layouts.
-   Photos offset left/right, text placed diagonally opposite.
+   GALLERY — HORIZONTAL CINEMATIC PHOTOBOOK
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Gallery page container — wraps hero + artist sections ── */
@@ -36,6 +34,60 @@
   display: none;
 }
 
+/* ── Desktop navigation — hidden on touch-first layouts ── */
+.gallery__navigation {
+  display: none;
+}
+
+@media (min-width: 800px) and (hover: hover) {
+  .gallery__navigation {
+    position: absolute;
+    z-index: 10;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.25rem, 3vw, 3rem);
+    pointer-events: none;
+  }
+
+  .gallery__nav-button {
+    width: 3.25rem;
+    height: 3.25rem;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.88);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    line-height: 1;
+    opacity: 0.6;
+    pointer-events: auto;
+    transition: opacity 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+
+  .gallery__nav-button span {
+    display: block;
+    transform: translateY(-0.08em);
+  }
+
+  .gallery__nav-button:hover {
+    opacity: 1;
+    border-color: #fff;
+    color: #fff;
+    transform: scale(1.06);
+  }
+
+  .gallery__nav-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+    opacity: 1;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════
    SPREAD — one full-viewport "page" in the photo book
    ═══════════════════════════════════════════════════════════ */
@@ -63,6 +115,13 @@
 /* ── Image wrapper ── */
 .gallery__spread-image-wrap {
   position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: min(51.75vw, calc(100vh - 10rem), 810px);
+  aspect-ratio: 16 / 9;
+  max-width: 92vw;
+  transform: translate(-50%, -50%);
   overflow: hidden;
   line-height: 0;
   background: var(--color-surface);
@@ -109,8 +168,8 @@
   background-size: 256px 256px;
 }
 
-/* ── Vignette on full spreads ── */
-.gallery__spread--full .gallery__spread-image-wrap::after {
+/* ── A consistent vignette gives every 16:9 frame cinematic depth ── */
+.gallery__spread-image-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -194,6 +253,9 @@
   position: absolute;
   z-index: 5;
   pointer-events: none;
+  bottom: clamp(1.5rem, 6vh, 4rem);
+  left: clamp(1.5rem, 5vw, 5rem);
+  animation: textFade 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .gallery__spread-artist {

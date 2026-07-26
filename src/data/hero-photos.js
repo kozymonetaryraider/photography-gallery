@@ -1,6 +1,6 @@
 /**
- * 16 selected hero photos — one per artist.
- * Edit this list to swap in different photos.
+ * Selected homepage hero photos — one per artist.
+ * Each corresponding image is intentionally marked with "4banner" in its filename.
  */
 const HERO_PHOTO_IDS = [
   'atm-hanson-000004290003',            // ATM Hanson — landscape
@@ -20,6 +20,11 @@ const HERO_PHOTO_IDS = [
   'vansdaddy-都市醉汉-000046560012',       // Vansdaddy — landscape
   'yhl-000017390026',                   // YHL — landscape
   '王齐铭watchme-000046550030',           // 王齐铭WatchMe — landscape
+  'kkecho-4banner000012680009',           // KKECHO
+  'losty-4banner000017730012',             // Losty
+  'mula-sakee-4banner000080000028',        // Mula Sakee
+  'nato-4banner000017730035',              // nato
+  '极品贵公子-4banner000012680004',         // 极品贵公子
 ];
 
 export default HERO_PHOTO_IDS;
