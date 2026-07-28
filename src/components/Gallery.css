@@ -861,6 +861,13 @@ body:not(.gallery-active) .header {
     transform: translateX(-50%);
   }
 
+  /* Landscape hero stills become vertical editorial crops on phones. The
+     complete photograph remains available in the artist index and lightbox. */
+  .gallery__spread--landscape .gallery__spread-image {
+    object-fit: cover;
+    object-position: center;
+  }
+
   /* Keep the artist credit physically attached to the print. */
   .gallery__spread .gallery__spread-text {
     top: calc(var(--mobile-frame-top) + var(--frame-height, 50vh) + 0.75rem);

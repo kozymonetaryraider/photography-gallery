@@ -50,8 +50,9 @@ function HeroSlide({ photo, index, onSelect }) {
     height: window.innerHeight,
   }));
   const isPortrait = dimensions && dimensions.height > dimensions.width;
-  const imageRatio = dimensions
-    ? `${dimensions.width} / ${dimensions.height}`
+  const usesMobileLandscapeCrop = dimensions && viewport.width < 600 && !isPortrait;
+  const frameRatio = dimensions
+    ? (usesMobileLandscapeCrop ? '4 / 5' : `${dimensions.width} / ${dimensions.height}`)
     : '16 / 9';
 
   useEffect(() => {
@@ -66,7 +67,7 @@ function HeroSlide({ photo, index, onSelect }) {
   const frameSize = (() => {
     if (!dimensions) return {};
 
-    const ratio = dimensions.width / dimensions.height;
+    const ratio = usesMobileLandscapeCrop ? 4 / 5 : dimensions.width / dimensions.height;
     const maxHeight = Math.min(viewport.height * 0.78, viewport.height - 136, 810);
     const portraitWidth = viewport.width < 600 ? viewport.width * 0.88 : Math.min(viewport.width * 0.72, 544);
     const maxWidth = isPortrait ? portraitWidth : viewport.width * 0.92;
@@ -96,7 +97,7 @@ function HeroSlide({ photo, index, onSelect }) {
     >
       <div
         className="gallery__spread-image-wrap"
-        style={{ '--image-ratio': imageRatio, ...frameSize }}
+        style={{ '--image-ratio': frameRatio, ...frameSize }}
       >
         <img
           src={imageUrl(photo.image)}
