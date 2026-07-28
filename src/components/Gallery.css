@@ -844,6 +844,11 @@ body:not(.gallery-active) .header {
 }
 
 @media (max-width: 500px) {
+  /* Bring portrait prints closer to the navigation without changing their scale. */
+  .gallery__spread--portrait .gallery__spread-image-wrap {
+    top: 38%;
+  }
+
   .gallery__artists-inner {
     padding: var(--space-2xl) var(--space-md) var(--space-2xl);
   }
