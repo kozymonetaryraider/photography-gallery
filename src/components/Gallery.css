@@ -114,12 +114,13 @@
 
 /* ── Image wrapper ── */
 .gallery__spread-image-wrap {
+  --image-ratio: 16 / 9;
   position: absolute;
   left: 50%;
   top: 50%;
   width: auto;
-  height: min(51.75vw, calc(100vh - 10rem), 810px);
-  aspect-ratio: 16 / 9;
+  height: min(78vh, calc(100vh - 8.5rem), 810px);
+  aspect-ratio: var(--image-ratio);
   max-width: 92vw;
   transform: translate(-50%, -50%);
   overflow: hidden;
@@ -146,9 +147,20 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 500ms ease, filter 500ms ease;
   filter: contrast(1.08) saturate(1.05);
+}
+
+/* The frame follows each file's native ratio: a horizontal still remains
+   panoramic, while a vertical frame reads like a physical portrait print. */
+.gallery__spread--portrait .gallery__spread-image-wrap {
+  max-width: min(88vw, 34rem);
+}
+
+.gallery__spread--portrait .gallery__spread-text {
+  left: clamp(1.25rem, 4vw, 4rem);
+  bottom: clamp(1.25rem, 4vh, 3rem);
 }
 
 .gallery__spread:hover .gallery__spread-image {

@@ -8,9 +8,18 @@ const AUTO_INTERVAL = 4000; // ms per page
 const RESUME_DELAY = 8000;  // ms of inactivity before auto-scroll resumes
 
 /* ── Filter down to one hero photo per artist ── */
-const heroPhotos = HERO_PHOTO_IDS
+const defaultHeroPhotos = HERO_PHOTO_IDS
   .map((id) => photosData.find((p) => p.id === id))
   .filter(Boolean);
+
+function shuffledHeroPhotos() {
+  const photos = [...defaultHeroPhotos];
+  for (let index = photos.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [photos[index], photos[randomIndex]] = [photos[randomIndex], photos[index]];
+  }
+  return photos;
+}
 
 /* ── Group all photos by artist, sorted alphabetically for the index ── */
 const artistEntries = (() => {
@@ -34,9 +43,78 @@ const artistEntries = (() => {
   return order.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 })();
 
+function HeroSlide({ photo, index, onSelect }) {
+  const [dimensions, setDimensions] = useState(null);
+  const [viewport, setViewport] = useState(() => ({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  }));
+  const isPortrait = dimensions && dimensions.height > dimensions.width;
+  const imageRatio = dimensions
+    ? `${dimensions.width} / ${dimensions.height}`
+    : '16 / 9';
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
+
+  const frameSize = (() => {
+    if (!dimensions) return {};
+
+    const ratio = dimensions.width / dimensions.height;
+    const maxHeight = Math.min(viewport.height * 0.78, viewport.height - 136, 810);
+    const portraitWidth = viewport.width < 600 ? viewport.width * 0.88 : Math.min(viewport.width * 0.72, 544);
+    const maxWidth = isPortrait ? portraitWidth : viewport.width * 0.92;
+    const height = Math.min(maxHeight, maxWidth / ratio);
+
+    return {
+      width: `${Math.round(height * ratio)}px`,
+      height: `${Math.round(height)}px`,
+    };
+  })();
+
+  const handleLoad = (event) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    if (naturalWidth && naturalHeight) {
+      setDimensions({ width: naturalWidth, height: naturalHeight });
+    }
+  };
+
+  return (
+    <button
+      onClick={() => onSelect(photo.artist)}
+      className={`gallery__spread ${isPortrait ? 'gallery__spread--portrait' : 'gallery__spread--landscape'}`}
+    >
+      <div
+        className="gallery__spread-image-wrap"
+        style={{ '--image-ratio': imageRatio, ...frameSize }}
+      >
+        <img
+          src={imageUrl(photo.image)}
+          alt={photo.title}
+          className="gallery__spread-image"
+          loading={index < 2 ? 'eager' : 'lazy'}
+          onLoad={handleLoad}
+        />
+        <div className="gallery__spread-grain" />
+      </div>
+
+      <div className="gallery__spread-text">
+        <span className="gallery__spread-artist">·{photo.artist}</span>
+      </div>
+    </button>
+  );
+}
+
 export default function Gallery() {
   const trackRef = useRef(null);
   const artistsRef = useRef(null);
+  const [heroPhotos] = useState(shuffledHeroPhotos);
   const [page, setPage] = useState(0);
   const [ready, setReady] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState(null);
@@ -95,7 +173,7 @@ export default function Gallery() {
     const next = (current + direction + heroPhotos.length) % heroPhotos.length;
     pauseAutoScroll();
     track.scrollTo({ left: next * window.innerWidth, behavior: 'smooth' });
-  }, [pauseAutoScroll]);
+  }, [heroPhotos.length, pauseAutoScroll]);
 
   const startAutoTimer = useCallback(() => {
     const a = autoRef.current;
@@ -109,7 +187,7 @@ export default function Gallery() {
       const next = (cur + 1) % total;
       track.scrollTo({ left: next * window.innerWidth, behavior: 'smooth' });
     }, AUTO_INTERVAL);
-  }, []);
+  }, [heroPhotos.length]);
 
   useEffect(() => {
     startAutoTimer();
@@ -161,29 +239,14 @@ export default function Gallery() {
           ══════════════════════════════════════════════ */}
       <section className="gallery__hero">
         <div className="gallery__track" ref={trackRef}>
-          {heroPhotos.map((photo, i) => {
-            return (
-              <button
-                key={photo.id}
-                onClick={() => handleSpreadClick(photo.artist)}
-                className="gallery__spread"
-              >
-                <div className="gallery__spread-image-wrap">
-                  <img
-                    src={imageUrl(photo.image)}
-                    alt={photo.title}
-                    className="gallery__spread-image"
-                    loading={i < 2 ? 'eager' : 'lazy'}
-                  />
-                  <div className="gallery__spread-grain" />
-                </div>
-
-                <div className="gallery__spread-text">
-                  <span className="gallery__spread-artist">·{photo.artist}</span>
-                </div>
-              </button>
-            );
-          })}
+          {heroPhotos.map((photo, index) => (
+            <HeroSlide
+              key={photo.id}
+              photo={photo}
+              index={index}
+              onSelect={handleSpreadClick}
+            />
+          ))}
         </div>
 
         <div className="gallery__navigation" aria-label="Portfolio navigation">
