@@ -844,9 +844,34 @@ body:not(.gallery-active) .header {
 }
 
 @media (max-width: 500px) {
-  /* Bring portrait prints closer to the navigation without changing their scale. */
-  .gallery__spread--portrait .gallery__spread-image-wrap {
-    top: 38%;
+  /* The mobile stage occupies only the space below the 56px header. */
+  .gallery__hero {
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+  }
+
+  /* Treat each slide as a small editorial page: every print starts from the
+     same top line, regardless of whether the source is portrait or landscape. */
+  .gallery__spread {
+    --mobile-frame-top: clamp(1.5rem, 4dvh, 2.5rem);
+  }
+
+  .gallery__spread .gallery__spread-image-wrap {
+    top: var(--mobile-frame-top);
+    transform: translateX(-50%);
+  }
+
+  /* Keep the artist credit physically attached to the print. */
+  .gallery__spread .gallery__spread-text {
+    top: calc(var(--mobile-frame-top) + var(--frame-height, 50vh) + 0.75rem);
+    right: auto;
+    bottom: auto;
+    left: 4vw;
+    text-align: left;
+  }
+
+  .gallery__spread--portrait .gallery__spread-text {
+    left: 6vw;
   }
 
   .gallery__artists-inner {

@@ -89,6 +89,10 @@ function HeroSlide({ photo, index, onSelect }) {
     <button
       onClick={() => onSelect(photo.artist)}
       className={`gallery__spread ${isPortrait ? 'gallery__spread--portrait' : 'gallery__spread--landscape'}`}
+      style={dimensions ? {
+        '--frame-width': frameSize.width,
+        '--frame-height': frameSize.height,
+      } : undefined}
     >
       <div
         className="gallery__spread-image-wrap"
